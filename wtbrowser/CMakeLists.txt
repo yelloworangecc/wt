@@ -24,6 +24,9 @@ set(CEFSIMPLE_SRCS
   simple_app.h
   simple_handler.cc
   simple_handler.h
+  ../shared/SimpleUdp.cpp
+  ../shared/SimpleUdp.h
+  ../shared/Callback.h
   )
 set(CEFSIMPLE_SRCS_LINUX
   cefsimple_linux.cc

@@ -14,6 +14,7 @@
 #include "include/views/cef_window.h"
 #include "include/wrapper/cef_closure_task.h"
 #include "include/wrapper/cef_helpers.h"
+#include <iostream>
 
 namespace {
 
@@ -28,8 +29,17 @@ std::string GetDataURI(const std::string& data, const std::string& mime_type) {
 
 }  // namespace
 
+
+// callback for receiving udp message
+void SimpleHandlerCallback::operator()(char* pb, int isize)
+{
+	std::cout<<"received"<<std::endl;
+}
+
+
 SimpleHandler::SimpleHandler(bool use_views)
-    : use_views_(use_views), is_closing_(false) {
+    : use_views_(use_views), is_closing_(false), callback(this)
+{
   DCHECK(!g_instance);
   g_instance = this;
 }
@@ -65,6 +75,11 @@ void SimpleHandler::OnTitleChange(CefRefPtr<CefBrowser> browser,
 void SimpleHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser) {
   CEF_REQUIRE_UI_THREAD();
 
+  // start udp server
+  udp.bindPort(8081);
+  udp.startRecvProc(&callback);
+  
+  //CreateThread(NULL, 0, CtrlThreadFunc, (LPVOID)(browser->GetHost()->GetWindowHandle()), 0, NULL);
   // Add to the list of existing browsers.
   browser_list_.push_back(browser);
 }

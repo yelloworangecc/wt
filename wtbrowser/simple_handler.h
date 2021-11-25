@@ -8,7 +8,24 @@
 #include "include/cef_client.h"
 
 #include <list>
+#include "../shared/Callback.h"
+#include "../shared/SimpleUdp.h"
 
+class SimpleHandler;
+
+// callback function class
+class SimpleHandlerCallback : public Callback
+{
+public:
+    SimpleHandlerCallback(SimpleHandler* _psh) :psh(_psh) {}
+    ~SimpleHandlerCallback() {}
+
+    virtual void operator()(char* pb, int isize);
+private:
+    SimpleHandler* psh;
+};
+
+// cef hanlder implementation
 class SimpleHandler : public CefClient,
                       public CefDisplayHandler,
                       public CefLifeSpanHandler,
@@ -66,6 +83,9 @@ class SimpleHandler : public CefClient,
   BrowserList browser_list_;
 
   bool is_closing_;
+
+  SimpleUdp udp;
+  SimpleHandlerCallback callback;
 
   // Include the default reference counting implementation.
   IMPLEMENT_REFCOUNTING(SimpleHandler);
