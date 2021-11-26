@@ -39,9 +39,9 @@ void SimpleUdp::sendToPeer(sockaddr_in6* pname, Callback* pcbFill)
 	if (!isValid()) return;
 	
 	if (pname != nullptr) peer = *pname;
-	int isend = 0;
-	(*pcbFill)(pb,DEFAULT_BUFFER_SIZE);
-	isend = sendto(dp, pb, DEFAULT_BUFFER_SIZE, 0, (SOCKADDR *) &peer, sizeof (peer));
+	int isend = DEFAULT_BUFFER_SIZE;
+	(*pcbFill)(pb,&isend);
+	isend = sendto(dp, pb, isend, 0, (SOCKADDR *) &peer, sizeof (peer));
 	if (isend < 0 ) errorat = ERROR_SEND,errorno = WSAGetLastError();
 }
 
@@ -53,7 +53,7 @@ DWORD SimpleUdp::recvFunc(void* pvoid)
 	while (true)
 	{
 		irecv = recvfrom(pinstance->dp, pinstance->pb, DEFAULT_BUFFER_SIZE, 0, (SOCKADDR *) &(pinstance->peer), &ilen);
-		if (irecv > 0) (*SimpleUdp::pCallback)(pinstance->pb,irecv);
+		if (irecv > 0) (*SimpleUdp::pCallback)(pinstance->pb,&irecv);
 	}
 	return 0;
 }

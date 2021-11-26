@@ -20,7 +20,7 @@ public:
     SimpleHandlerCallback(SimpleHandler* _psh) :psh(_psh) {}
     ~SimpleHandlerCallback() {}
 
-    virtual void operator()(char* pb, int isize);
+    virtual void operator()(char* buffer, int *size) override;
 private:
     SimpleHandler* psh;
 };
@@ -70,6 +70,8 @@ class SimpleHandler : public CefClient,
   // Returns true if the Chrome runtime is enabled.
   static bool IsChromeRuntimeEnabled();
 
+  CefRefPtr<CefBrowser> getBrowser() {return wtbrowser;}
+
  private:
   // Platform-specific implementation.
   void PlatformTitleChange(CefRefPtr<CefBrowser> browser,
@@ -79,8 +81,10 @@ class SimpleHandler : public CefClient,
   const bool use_views_;
 
   // List of existing browser windows. Only accessed on the CEF UI thread.
-  typedef std::list<CefRefPtr<CefBrowser>> BrowserList;
-  BrowserList browser_list_;
+  //typedef std::list<CefRefPtr<CefBrowser>> BrowserList;
+  //BrowserList browser_list_;
+
+  CefRefPtr<CefBrowser> wtbrowser;
 
   bool is_closing_;
 

@@ -1,3 +1,5 @@
+#ifndef _SIMPLE_UDP_H_
+#define _SIMPLE_UDP_H_
 #include <winsock2.h>
 #include <Ws2tcpip.h>
 class Callback;
@@ -33,3 +35,4 @@ private:
 	UdpErrorAt errorat;//error at
 	int errorno;//return value sock2
 };
+#endif
