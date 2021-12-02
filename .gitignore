@@ -36,3 +36,4 @@ build/
 wtbrowser/CefDebug/
 wtbrowser/CefRelease/
 wtbrowser/CefResources/
+wtserver/__pycache__/
