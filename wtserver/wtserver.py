@@ -2,8 +2,12 @@ from flask import Flask
 from flask import render_template
 from flask import send_file
 from flask import url_for
+from flask import request
+from EmailMe import EmailMe
+import os,time
 
 app = Flask(__name__)
+emailMe = EmailMe('smtp.qq.com',465)
 
 @app.route('/')
 def hello_world():
@@ -21,5 +25,25 @@ def album(name=None):
 def resume():
     return render_template('resume.html')
 
+@app.route('/messageme',methods=['GET','POST'])
+def messageme():
+    ''' {'who': 'tester', 'msg': 'hello' } '''
+    if request.method == 'POST':
+        data = request.form
+        who = data['who']
+        msg = data['msg']
+        code = os.getenv('QQMAILCODE')
+        if who is None or msg is None or code is None:
+            return 'Send message FAIL'
+        else:
+            append_file_cmd = 'echo ' + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()) + ', ' + who +', ' + msg + ' >> msg.txt'
+            os.system(append_file_cmd)
+            emailMe.login('1040617473@qq.com',code)
+            emailMe.send('yelloworangecc@qq.com',who,msg)
+            return 'Send message OK'
+        
+    if request.method == 'GET':
+        return render_template('msgform.html')
+
 if __name__ == '__main__':
-    app.run(debug=True,port=8080)
+    app.run(debug=True,host='0.0.0.0',port=8080)
