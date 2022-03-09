@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="web controller">
+    <meta name="author" content="Yellow">
+    <title>webcontroller</title>
+    
+    <link rel="icon" href="{{url_for('static',filename='favicon.ico')}}" />
+    <link href="{{url_for('static',filename='bootstrap.min.css')}}" rel="stylesheet">
+    <style type="text/css">
+      .controller{
+	  text-align: center;
+	  border:5px solid black;
+	  width:190px;
+	  border-radius:25px;
+	  padding:0 0 10px 0;
+	  margin:10px auto;
+      }
+      .light{
+	  background-color: gray;
+	  width:60px;
+	  margin:0 60px 10px 60px;
+      }
+      .btn-lg{
+	  text-align: center;
+	  height: 50px;
+	  width: 50px;
+	  margin: 2px;
+      }
+    </style>
+    <script type="text/javascript">
+      function controller(){
+	  alert("command");
+      }
+    </script>
+  </head>
+  <body class="bg-light">
+    <div class="controller">
+      <div class="light">^</div>
+      <div class="grid">
+          <a href="/controller/1" class="btn btn-secondary btn-lg">1</a>
+	  <a href="/controller/2" class="btn btn-secondary btn-lg">2</a>
+	  <a href="/controller/3" class="btn btn-secondary btn-lg">3</a>
+      </div>
+      <div class="grid">
+          <a href="/controller/4" class="btn btn-secondary btn-lg">4</a>
+	  <a href="/controller/5" class="btn btn-secondary btn-lg">5</a>
+	  <a href="/controller/6" class="btn btn-secondary btn-lg">6</a>
+      </div>
+      <div class="grid">
+          <a href="/controller/7" class="btn btn-secondary btn-lg">7</a>
+	  <a href="/controller/8" class="btn btn-secondary btn-lg">8</a>
+	  <a href="/controller/9" class="btn btn-secondary btn-lg">9</a>
+	  
+      </div>
+      <div class="grid">
+          <a href="/controller/p" class="btn btn-secondary btn-lg">&lt;</a>
+	  <a href="/controller/0" class="btn btn-secondary btn-lg">0</a>
+	  <a href="/controller/n" class="btn btn-secondary btn-lg">&gt;</a>
+      </div>
+    </div>
+      <script src="{{url_for('static',filename='bootstrap.bundle.min.js')}}"></script>
+  </body>
+</html>
+

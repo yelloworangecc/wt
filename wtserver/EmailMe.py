@@ -4,10 +4,13 @@ from email.header import Header
 
 class EmailMe:
     def __init__(self, domain, port):
-        self._smtp = smtplib.SMTP_SSL(domain, port)
+        self._domain = domain
+        self._port = port
+        
     def login(self, email, passcode):
+        self._smtp = smtplib.SMTP_SSL(_domain, _port)
         self._email = email
-        self._smtp.login(email, passcode) 
+        self._smtp.login(email, passcode)
     def quit(self):
         self._smtp.quit()
     def send(self,to,who,msg):

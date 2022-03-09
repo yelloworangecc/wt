@@ -3,6 +3,7 @@ from flask import render_template
 from flask import send_file
 from flask import url_for
 from flask import request
+from flask import logging
 from EmailMe import EmailMe
 import os,time
 
@@ -20,6 +21,15 @@ def album(name=None):
         return render_template('album.html')
     else:
         return send_file('album/'+name)
+
+@app.route('/controller/')
+@app.route('/controller/<command>')
+def controller(command=None):
+    if command is None:
+        return render_template('controller.html')
+    else:
+        app.logger.info(command)
+        return render_template('controller.html')
 
 @app.route('/resume')
 def resume():
@@ -40,6 +50,7 @@ def messageme():
             os.system(append_file_cmd)
             emailMe.login('1040617473@qq.com',code)
             emailMe.send('yelloworangecc@qq.com',who,msg)
+            emailMe.quit()
             return 'Send message OK'
         
     if request.method == 'GET':
